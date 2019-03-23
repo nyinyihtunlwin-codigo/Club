@@ -5,8 +5,6 @@
       <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/core-ktx-1.1.0-alpha05.aar/e0ce44e7225657aa504c3f7633e995d5/res" />
     </CLASSES>
     <JAVADOC />
-    <SOURCES>
-      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/androidx.core/core-ktx/1.1.0-alpha05/26e14ed09a4685d20af6787059f7cc36e4c832cb/core-ktx-1.1.0-alpha05-sources.jar!/" />
-    </SOURCES>
+    <SOURCES />
   </library>
 </component>

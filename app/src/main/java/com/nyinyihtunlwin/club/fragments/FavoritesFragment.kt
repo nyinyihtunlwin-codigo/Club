@@ -2,14 +2,12 @@ package com.nyinyihtunlwin.club.fragments
 
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
 import com.nyinyihtunlwin.club.R
 
-class FavoritesFragment : Fragment() {
+class FavoritesFragment : BaseFragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -19,10 +17,4 @@ class FavoritesFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_favorites, container, false)
     }
 
-
-    companion object {
-        @JvmStatic
-        fun newInstance() =
-            FavoritesFragment()
-    }
 }

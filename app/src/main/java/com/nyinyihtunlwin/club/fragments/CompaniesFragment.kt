@@ -2,14 +2,18 @@ package com.nyinyihtunlwin.club.fragments
 
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import com.nyinyihtunlwin.club.R
+import com.nyinyihtunlwin.club.data.viewmodels.CompanyViewModel
 
-class CompaniesFragment : Fragment() {
+
+class CompaniesFragment : BaseFragment() {
+
+    private lateinit var mViewModel: CompanyViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -19,10 +23,19 @@ class CompaniesFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_companies, container, false)
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-    companion object {
-        @JvmStatic
-        fun newInstance() =
-            CompaniesFragment()
+        mViewModel = ViewModelProviders.of(this@CompaniesFragment)
+            .get(CompanyViewModel::class.java)
+
+        mViewModel.onGetClubData()
+
+        mViewModel.mResponseLd.observe(this, Observer {
+
+        })
+        mViewModel.mErrorLD.observe(this, Observer {
+
+        })
     }
 }
