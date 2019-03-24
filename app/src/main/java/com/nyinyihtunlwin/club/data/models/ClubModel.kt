@@ -3,6 +3,7 @@ package com.nyinyihtunlwin.club.data.models
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import com.nyinyihtunlwin.club.data.vos.CompanyVo
+import com.nyinyihtunlwin.club.data.vos.MemberVo
 import com.nyinyihtunlwin.club.persistence.ClubDb
 import com.nyinyihtunlwin.club.utils.AppConstants
 import com.nyinyihtunlwin.club.utils.ConfigUtils
@@ -84,5 +85,9 @@ class ClubModel : BaseModel() {
                 mDatabase.companyDao().getCompanies()
             }
         }
+    }
+
+    fun getMembersByCompany(companyId: String): List<MemberVo>? {
+        return mDatabase.memberDao().getMembersByCompany(companyId)
     }
 }

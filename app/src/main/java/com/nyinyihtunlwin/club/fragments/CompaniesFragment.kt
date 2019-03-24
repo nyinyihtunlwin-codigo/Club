@@ -9,16 +9,19 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.nyinyihtunlwin.club.R
+import com.nyinyihtunlwin.club.activities.MembersActivity
 import com.nyinyihtunlwin.club.adapters.CompanyAdapter
 import com.nyinyihtunlwin.club.data.viewmodels.CompanyViewModel
 import com.nyinyihtunlwin.club.data.vos.CompanyVo
+import com.nyinyihtunlwin.club.delegates.CompanyDelegate
 import com.nyinyihtunlwin.club.events.CompanyFilterEvent
 import kotlinx.android.synthetic.main.fragment_companies.*
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
 
-class CompaniesFragment : BaseFragment() {
+class CompaniesFragment : BaseFragment()
+    , CompanyDelegate {
 
     private lateinit var mViewModel: CompanyViewModel
     private lateinit var mAdapter: CompanyAdapter
@@ -38,7 +41,7 @@ class CompaniesFragment : BaseFragment() {
             .get(CompanyViewModel::class.java)
 
         rvCompanies.setEmptyView(vpEmpty)
-        mAdapter = CompanyAdapter(context!!)
+        mAdapter = CompanyAdapter(context!!,this)
         rvCompanies.adapter = mAdapter
         rvCompanies.layoutManager = LinearLayoutManager(context)
 
@@ -72,9 +75,17 @@ class CompaniesFragment : BaseFragment() {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onCompanyFilterEvent(event : CompanyFilterEvent){
+    fun onCompanyFilterEvent(event: CompanyFilterEvent) {
         loadClubData()
     }
+
+    override fun onTapCompany(companyId: String) {
+        startActivity(MembersActivity.newInstance(context!!, companyId))
+    }
+
+    override fun onTapCompanyWebsite(webUrl: String) {
+    }
+
 
     override fun onStart() {
         super.onStart()
