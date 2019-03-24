@@ -1,7 +1,9 @@
 package com.nyinyihtunlwin.club.data.models
 
+import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import com.nyinyihtunlwin.club.data.vos.CompanyVo
+import com.nyinyihtunlwin.club.persistence.ClubDb
 import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -18,6 +20,10 @@ class ClubModel : BaseModel() {
             val i = INSTANCE
             return i!!
         }
+    }
+
+    fun initDatabase(context: Context) {
+        mDatabase = ClubDb.getDatabase(context)
     }
 
     fun getClubData(
@@ -38,6 +44,7 @@ class ClubModel : BaseModel() {
                     override fun onNext(response: List<CompanyVo>) {
                         if (response.isNotEmpty()) {
                             responseLd.value = response
+                            saveToDb(response)
                         } else {
                             errorLd.value = "No Data"
                         }
@@ -47,5 +54,19 @@ class ClubModel : BaseModel() {
                         errorLd.value = p0.localizedMessage
                     }
                 })
+    }
+
+    private fun saveToDb(response: List<CompanyVo>) {
+        mDatabase.companyDao().insertCompanies(response)
+        for (res in response) {
+            for (mem in res.members) {
+                mem.companyId = res.companyId
+            }
+            mDatabase.memberDao().insertMembers(res.members)
+        }
+    }
+
+    fun getCompanies(): List<CompanyVo> {
+        return mDatabase.companyDao().getCompanies()
     }
 }
