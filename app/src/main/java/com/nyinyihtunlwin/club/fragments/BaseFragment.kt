@@ -39,4 +39,5 @@ open class BaseFragment:Fragment() {
         alertDialog!!.setMessage(errorMsg)
         alertDialog!!.show()
     }
+
 }

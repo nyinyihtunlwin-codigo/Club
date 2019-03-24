@@ -7,13 +7,21 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.nyinyihtunlwin.club.R
+import com.nyinyihtunlwin.club.adapters.CompanyAdapter
 import com.nyinyihtunlwin.club.data.viewmodels.CompanyViewModel
+import com.nyinyihtunlwin.club.data.vos.CompanyVo
+import com.nyinyihtunlwin.club.events.CompanyFilterEvent
+import kotlinx.android.synthetic.main.fragment_companies.*
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 
 class CompaniesFragment : BaseFragment() {
 
     private lateinit var mViewModel: CompanyViewModel
+    private lateinit var mAdapter: CompanyAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,13 +37,50 @@ class CompaniesFragment : BaseFragment() {
         mViewModel = ViewModelProviders.of(this@CompaniesFragment)
             .get(CompanyViewModel::class.java)
 
-        mViewModel.onGetClubData()
+        rvCompanies.setEmptyView(vpEmpty)
+        mAdapter = CompanyAdapter(context!!)
+        rvCompanies.adapter = mAdapter
+        rvCompanies.layoutManager = LinearLayoutManager(context)
+
+        loadClubData()
+
+        swipeRefresh.setOnRefreshListener {
+            loadClubData()
+        }
 
         mViewModel.mResponseLd.observe(this, Observer {
-
+            dismissLoading()
+            mAdapter.setNewData(it as MutableList<CompanyVo>)
         })
         mViewModel.mErrorLD.observe(this, Observer {
-
+            dismissLoading()
+            showPromptDialog(it.toString())
         })
+    }
+
+    private fun loadClubData() {
+        showLoading()
+        mViewModel.onGetClubData()
+    }
+
+    private fun showLoading() {
+        swipeRefresh.isRefreshing = true
+    }
+
+    private fun dismissLoading() {
+        swipeRefresh.isRefreshing = false
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onCompanyFilterEvent(event : CompanyFilterEvent){
+        loadClubData()
+    }
+
+    override fun onStart() {
+        super.onStart()
+    }
+
+    override fun onStop() {
+        super.onStop()
     }
 }

@@ -4,6 +4,8 @@ import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import com.nyinyihtunlwin.club.data.vos.CompanyVo
 import com.nyinyihtunlwin.club.persistence.ClubDb
+import com.nyinyihtunlwin.club.utils.AppConstants
+import com.nyinyihtunlwin.club.utils.ConfigUtils
 import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -43,8 +45,8 @@ class ClubModel : BaseModel() {
 
                     override fun onNext(response: List<CompanyVo>) {
                         if (response.isNotEmpty()) {
-                            responseLd.value = response
                             saveToDb(response)
+                            responseLd.value = getCompanies()
                         } else {
                             errorLd.value = "No Data"
                         }
@@ -67,6 +69,20 @@ class ClubModel : BaseModel() {
     }
 
     fun getCompanies(): List<CompanyVo> {
-        return mDatabase.companyDao().getCompanies()
+        val loadComSortOrder = ConfigUtils.getInstance().loadComSortOrder()
+        return when (loadComSortOrder) {
+            AppConstants.COMPANY_ORDER_DEFAULT -> {
+                mDatabase.companyDao().getCompanies()
+            }
+            AppConstants.COMPANY_ORDER_ASC -> {
+                mDatabase.companyDao().getCompaniesAscOrder()
+            }
+            AppConstants.COMPANY_ORDER_DESC -> {
+                mDatabase.companyDao().getCompaniesDescOrder()
+            }
+            else -> {
+                mDatabase.companyDao().getCompanies()
+            }
+        }
     }
 }

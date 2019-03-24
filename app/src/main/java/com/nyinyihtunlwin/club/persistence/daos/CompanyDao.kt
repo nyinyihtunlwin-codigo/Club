@@ -18,6 +18,12 @@ abstract interface CompanyDao {
     @Query("SELECT * FROM ${AppConstants.TABLE_COMPANY}")
     abstract fun getCompanies(): List<CompanyVo>
 
+    @Query("SELECT * FROM ${AppConstants.TABLE_COMPANY} ORDER BY company DESC")
+    abstract fun getCompaniesDescOrder(): List<CompanyVo>
+
+    @Query("SELECT * FROM ${AppConstants.TABLE_COMPANY} ORDER BY company")
+    abstract fun getCompaniesAscOrder(): List<CompanyVo>
+
     @Query("SELECT * FROM ${AppConstants.TABLE_COMPANY} WHERE companyId = :id")
     abstract fun getCompanyById(id: String): CompanyVo?
 

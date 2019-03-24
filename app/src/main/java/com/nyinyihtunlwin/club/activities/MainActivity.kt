@@ -8,8 +8,10 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import com.google.android.material.navigation.NavigationView
 import com.nyinyihtunlwin.club.R
+import com.nyinyihtunlwin.club.dialogs.CompanyFilterDialog
 import com.nyinyihtunlwin.club.fragments.AboutFragment
 import com.nyinyihtunlwin.club.fragments.CompaniesFragment
 import com.nyinyihtunlwin.club.fragments.FavoritesFragment
@@ -37,6 +39,12 @@ class MainActivity : BaseActivity(),
             startActivity(SearchActivity.newInstance(applicationContext))
         }
         setFragment(CompaniesFragment(), "Companies")
+
+        ivFilter.setOnClickListener {
+            val fragmentManager = supportFragmentManager
+            val newFragment = CompanyFilterDialog()
+            newFragment.show(fragmentManager.beginTransaction(),"")
+        }
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
