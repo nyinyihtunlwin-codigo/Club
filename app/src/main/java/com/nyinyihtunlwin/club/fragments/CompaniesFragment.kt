@@ -86,6 +86,10 @@ class CompaniesFragment : BaseFragment()
     override fun onTapCompanyWebsite(webUrl: String) {
     }
 
+    override fun onTapFavoriteCompany(companyId: String) {
+        mViewModel.onTapFavorite(companyId)
+    }
+
     override fun onStart() {
         super.onStart()
     }

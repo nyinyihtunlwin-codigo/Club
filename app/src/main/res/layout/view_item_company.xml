@@ -9,6 +9,13 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:padding="@dimen/margin_medium_2">
+        <ImageView
+                android:id="@+id/ivFavorite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/margin_medium"
+                android:src="@drawable/ic_favorite_border_24dp"
+                android:layout_alignParentEnd="true"/>
         <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/ivCompany"
                 android:layout_width="96dp"

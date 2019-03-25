@@ -25,4 +25,8 @@ class CompanyViewModel : BaseViewModel() {
             mResponseLd.value = ClubModel.getInstance().getCompanies()
         }
     }
+
+    fun onTapFavorite(companyId: String) {
+        ClubModel.getInstance().favoriteCompany(companyId)
+    }
 }

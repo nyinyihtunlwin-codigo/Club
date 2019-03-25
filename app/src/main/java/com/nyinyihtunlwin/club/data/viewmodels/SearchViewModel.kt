@@ -23,4 +23,12 @@ class SearchViewModel : BaseViewModel() {
     fun onGetAllMembers() {
         mMemResponseLd.value = ClubModel.getInstance().getAllMembers()
     }
+
+    fun onTapFavoriteCompany(companyId: String) {
+        ClubModel.getInstance().favoriteCompany(companyId)
+    }
+
+    fun onTapFavoriteMember(companyId: String) {
+        ClubModel.getInstance().favoriteCompany(companyId)
+    }
 }

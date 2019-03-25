@@ -20,4 +20,8 @@ class MemberViewModel : BaseViewModel() {
             mErrorLD.value = "No data!"
         }
     }
+
+    fun onTapFavorite(memberId: String) {
+        ClubModel.getInstance().favoriteMember(memberId)
+    }
 }

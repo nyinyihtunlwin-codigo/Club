@@ -20,9 +20,12 @@ import com.nyinyihtunlwin.club.data.viewmodels.SearchViewModel
 import com.nyinyihtunlwin.club.data.vos.CompanyVo
 import com.nyinyihtunlwin.club.data.vos.MemberVo
 import com.nyinyihtunlwin.club.delegates.CompanyDelegate
+import com.nyinyihtunlwin.club.delegates.MemberDelegate
 import kotlinx.android.synthetic.main.activity_search.*
 
-class SearchActivity : BaseActivity(), CompanyDelegate {
+class SearchActivity : BaseActivity(),
+    CompanyDelegate,
+    MemberDelegate {
 
     companion object {
         fun newInstance(context: Context): Intent {
@@ -52,7 +55,7 @@ class SearchActivity : BaseActivity(), CompanyDelegate {
         rvCompanies.adapter = mComAdapter
         rvCompanies.layoutManager = LinearLayoutManager(applicationContext)
 
-        mMemAdapter = MemberAdapter(applicationContext!!)
+        mMemAdapter = MemberAdapter(applicationContext!!, this)
         rvMembers.adapter = mMemAdapter
         rvMembers.layoutManager = LinearLayoutManager(applicationContext)
 
@@ -92,7 +95,7 @@ class SearchActivity : BaseActivity(), CompanyDelegate {
             }
         })
 
-        etSearch.setOnEditorActionListener(object:TextView.OnEditorActionListener{
+        etSearch.setOnEditorActionListener(object : TextView.OnEditorActionListener {
             override fun onEditorAction(v: TextView?, actionId: Int, event: KeyEvent?): Boolean {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                     hideSoftKeyboard(applicationContext)
@@ -154,5 +157,12 @@ class SearchActivity : BaseActivity(), CompanyDelegate {
 
     }
 
+    override fun onTapFavoriteCompany(companyId: String) {
+        mViewModel.onTapFavoriteCompany(companyId)
+    }
+
+    override fun onTapFavoriteMember(memberId: String) {
+        mViewModel.onTapFavoriteMember(memberId)
+    }
 
 }

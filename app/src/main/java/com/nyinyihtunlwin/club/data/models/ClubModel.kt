@@ -1,8 +1,10 @@
 package com.nyinyihtunlwin.club.data.models
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.nyinyihtunlwin.club.data.vos.CompanyVo
+import com.nyinyihtunlwin.club.data.vos.FavoriteVo
 import com.nyinyihtunlwin.club.data.vos.MemberVo
 import com.nyinyihtunlwin.club.persistence.ClubDb
 import com.nyinyihtunlwin.club.utils.AppConstants
@@ -127,7 +129,65 @@ class ClubModel : BaseModel() {
         return mDatabase.companyDao().getCompaniesAscOrder()
     }
 
-    fun getAllMembers():List<MemberVo>?{
+    fun getAllMembers(): List<MemberVo>? {
         return mDatabase.memberDao().getMembersAscOrder()
+    }
+
+    fun favoriteCompany(companyId: String) {
+        if (mDatabase.favoriteDao().getFavoriteById(companyId) == 0) {
+            mDatabase.favoriteDao().insertFavorite(FavoriteVo(companyId, AppConstants.TYPE_COMPANY))
+        } else {
+            mDatabase.favoriteDao().deleteFavoriteById(companyId)
+        }
+    }
+
+    fun getFavoriteCompanies(): List<CompanyVo>? {
+        val companies: ArrayList<CompanyVo> = arrayListOf()
+        val favoriteCompanies = mDatabase.favoriteDao().getFavoriteCompanies()
+        if (favoriteCompanies.isNotEmpty()) {
+            for (fav in favoriteCompanies) {
+                if (mDatabase.companyDao().getCompanyById(fav.itemId) != null) {
+                    val company = mDatabase.companyDao().getCompanyById(fav.itemId)
+                    companies.add(company!!)
+                }
+            }
+        }
+        return companies
+    }
+
+    fun isFavoriteCompany(companyId: String): Boolean {
+        if (mDatabase.favoriteDao().getFavoriteById(companyId) != 0) {
+            return true
+        }
+        return false
+    }
+
+    fun favoriteMember(memberId: String) {
+        if (mDatabase.favoriteDao().getFavoriteById(memberId) == 0) {
+            mDatabase.favoriteDao().insertFavorite(FavoriteVo(memberId, AppConstants.TYPE_MEMBER))
+        } else {
+            mDatabase.favoriteDao().deleteFavoriteById(memberId)
+        }
+    }
+
+    fun getFavoriteMembers(): List<MemberVo>? {
+        val members: ArrayList<MemberVo> = arrayListOf()
+        val favoriteMembers = mDatabase.favoriteDao().getFavoriteMembers()
+        if (favoriteMembers.isNotEmpty()) {
+            for (fav in favoriteMembers) {
+                if (mDatabase.memberDao().getMemberById(fav.itemId) != null) {
+                    val member = mDatabase.memberDao().getMemberById(fav.itemId)
+                    members.add(member!!)
+                }
+            }
+        }
+        return members
+    }
+
+    fun isFavoriteMember(memberId: String): Boolean {
+        if (mDatabase.favoriteDao().getFavoriteById(memberId) != 0) {
+            return true
+        }
+        return false
     }
 }

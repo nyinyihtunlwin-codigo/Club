@@ -5,6 +5,11 @@ class AppConstants {
         const val BASE_URL = "https://next.json-generator.com/"
         const val TABLE_COMPANY = "companies"
         const val TABLE_MEMBER = "members"
+        const val TABLE_FAVORITES = "favorites"
+
+        const val TYPE_COMPANY = "company"
+        const val TYPE_MEMBER = "member"
+
         const val COMPANY_ORDER_DEFAULT= "com-default"
         const val COMPANY_ORDER_ASC = "com-asc"
         const val COMPANY_ORDER_DESC = "com-desc"

@@ -10,6 +10,7 @@ import com.nyinyihtunlwin.club.R
 import com.nyinyihtunlwin.club.adapters.MemberAdapter
 import com.nyinyihtunlwin.club.data.viewmodels.MemberViewModel
 import com.nyinyihtunlwin.club.data.vos.MemberVo
+import com.nyinyihtunlwin.club.delegates.MemberDelegate
 import com.nyinyihtunlwin.club.dialogs.MemberFilterDialog
 import com.nyinyihtunlwin.club.events.MemberFilterEvent
 import com.nyinyihtunlwin.club.utils.AppConstants
@@ -19,8 +20,8 @@ import kotlinx.android.synthetic.main.content_members.*
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
-class MembersActivity : BaseActivity() {
-
+class MembersActivity : BaseActivity(),
+MemberDelegate{
 
     private lateinit var mViewModel: MemberViewModel
     private lateinit var mAdapter: MemberAdapter
@@ -57,7 +58,7 @@ class MembersActivity : BaseActivity() {
             .get(MemberViewModel::class.java)
 
         rvMembers.setEmptyView(vpEmpty)
-        mAdapter = MemberAdapter(applicationContext!!)
+        mAdapter = MemberAdapter(applicationContext!!,this)
         rvMembers.adapter = mAdapter
         rvMembers.layoutManager = LinearLayoutManager(applicationContext)
 
@@ -86,6 +87,10 @@ class MembersActivity : BaseActivity() {
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onMemberFilterEvent(event: MemberFilterEvent) {
         mViewModel.onGetMembers(mCompanyId)
+    }
+
+    override fun onTapFavoriteMember(memberId: String) {
+        mViewModel.onTapFavorite(memberId)
     }
 
     override fun onStart() {

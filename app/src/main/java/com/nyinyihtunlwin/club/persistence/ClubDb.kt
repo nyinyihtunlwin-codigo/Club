@@ -6,19 +6,22 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.nyinyihtunlwin.club.data.vos.CompanyVo
+import com.nyinyihtunlwin.club.data.vos.FavoriteVo
 import com.nyinyihtunlwin.club.data.vos.MemberVo
 import com.nyinyihtunlwin.club.persistence.daos.CompanyDao
+import com.nyinyihtunlwin.club.persistence.daos.FavoriteDao
 import com.nyinyihtunlwin.club.persistence.daos.MemberDao
 import com.nyinyihtunlwin.club.persistence.typeconverters.NameTypeConverter
 
 @Database(
-    entities = [CompanyVo::class, MemberVo::class], version = 1, exportSchema = false
+    entities = [CompanyVo::class, MemberVo::class, FavoriteVo::class], version = 1, exportSchema = false
 )
 @TypeConverters(NameTypeConverter::class)
 abstract class ClubDb : RoomDatabase() {
 
     abstract fun companyDao(): CompanyDao
     abstract fun memberDao(): MemberDao
+    abstract fun favoriteDao(): FavoriteDao
 
     companion object {
 

@@ -65,8 +65,8 @@ class MainActivity : BaseActivity(),
                 }
             }
             R.id.nav_about -> {
-                if (mCurrentSection != 1) {
-                    mCurrentSection = 1
+                if (mCurrentSection != 2) {
+                    mCurrentSection = 2
                     ivFilter.visibility = View.GONE
                     setFragment(AboutFragment(), "About")
                 }
