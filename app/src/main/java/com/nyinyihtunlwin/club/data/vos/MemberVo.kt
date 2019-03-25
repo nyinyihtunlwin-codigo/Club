@@ -19,7 +19,6 @@ class MemberVo {
     @SerializedName("age")
     var age: Int = 0
 
-    @Embedded
     @SerializedName("name")
     var name: NameVo? = null
 

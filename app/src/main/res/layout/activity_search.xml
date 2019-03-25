@@ -61,10 +61,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
-                            android:src="@drawable/ic_search_24dp"/>
+                            android:src="@drawable/ic_search_grey_24dp"/>
 
                     <EditText
-                            android:id="@+id/et_search"
+                            android:id="@+id/etSearch"
                             android:layout_width="0dp"
                             android:layout_height="40dp"
                             android:layout_marginStart="@dimen/margin_medium"
@@ -80,6 +80,7 @@
             </androidx.cardview.widget.CardView>
         </FrameLayout>
         <RadioGroup
+                android:id="@+id/rGSearch"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/colorPrimary"
@@ -90,14 +91,16 @@
                 android:orientation="horizontal"
                 android:layout_below="@id/fl_search">
             <RadioButton
-                    android:layout_width="wrap_content"
+                    android:id="@+id/rbCompany"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/company"
                     android:checked="true"
                     android:textColor="@color/white_full"/>
             <RadioButton
-                    android:layout_width="wrap_content"
+                    android:id="@+id/rbMember"
+                    android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:text="@string/member"
@@ -107,8 +110,16 @@
         <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@id/fl_search">
-
+                android:layout_below="@id/rGSearch">
+            <com.nyinyihtunlwin.club.components.SmartRecyclerView
+                    android:id="@+id/rvCompanies"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+            <com.nyinyihtunlwin.club.components.SmartRecyclerView
+                    android:id="@+id/rvMembers"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone"/>
         </FrameLayout>
     </RelativeLayout>
 

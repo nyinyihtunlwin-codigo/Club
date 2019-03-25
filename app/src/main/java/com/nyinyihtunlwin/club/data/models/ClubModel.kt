@@ -88,6 +88,46 @@ class ClubModel : BaseModel() {
     }
 
     fun getMembersByCompany(companyId: String): List<MemberVo>? {
-        return mDatabase.memberDao().getMembersByCompany(companyId)
+        val loadMemSortBy = ConfigUtils.getInstance().loadMemSortBy()
+        val loadMemSortOrder = ConfigUtils.getInstance().loadMemSortOrder()
+
+        return when (loadMemSortOrder) {
+            AppConstants.MEMBER_ORDER_DEFAULT -> {
+                mDatabase.memberDao().getMembersByCompany(companyId)
+            }
+            AppConstants.MEMBER_ORDER_ASC -> {
+                if (loadMemSortBy == AppConstants.MEMBER_ORDERBY_NAME) {
+                    mDatabase.memberDao().getMembersByCompanyAscByName(companyId)
+                } else {
+                    mDatabase.memberDao().getMembersByCompanyAscByAge(companyId)
+                }
+            }
+            AppConstants.MEMBER_ORDER_DESC -> {
+                if (loadMemSortBy == AppConstants.MEMBER_ORDERBY_NAME) {
+                    mDatabase.memberDao().getMembersByCompanyDescByName(companyId)
+                } else {
+                    mDatabase.memberDao().getMembersByCompanyDescByAge(companyId)
+                }
+            }
+            else -> {
+                mDatabase.memberDao().getMembersByCompany(companyId)
+            }
+        }
+    }
+
+    fun searchCompaniesByName(keywords: String): List<CompanyVo>? {
+        return mDatabase.companyDao().getCompanyByName(keywords)
+    }
+
+    fun searchMembersByName(keywords: String): List<MemberVo>? {
+        return mDatabase.memberDao().getMemberByName(keywords)
+    }
+
+    fun getAllCompanies(): List<CompanyVo>? {
+        return mDatabase.companyDao().getCompaniesAscOrder()
+    }
+
+    fun getAllMembers():List<MemberVo>?{
+        return mDatabase.memberDao().getMembersAscOrder()
     }
 }

@@ -6,7 +6,7 @@ import com.nyinyihtunlwin.club.data.vos.NameVo
 class NameTypeConverter {
     @TypeConverter
     fun fromFullName(value: String?): NameVo? {
-        return value?.let { NameVo(it.split(" ")[0], it.split("")[1]) }
+        return value?.let { NameVo(it.split(" ")[0], it.split(" ")[1]) }
     }
 
     @TypeConverter

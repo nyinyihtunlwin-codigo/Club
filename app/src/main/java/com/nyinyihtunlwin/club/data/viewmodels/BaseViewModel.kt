@@ -7,7 +7,7 @@ abstract class BaseViewModel : ViewModel() {
 
     lateinit var mErrorLD: MutableLiveData<String>
 
-    open fun initPresenter() {
+    open fun initViewModel() {
         mErrorLD = MutableLiveData()
     }
 }

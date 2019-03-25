@@ -29,4 +29,7 @@ abstract interface CompanyDao {
 
     @Query("DELETE FROM ${AppConstants.TABLE_COMPANY} WHERE companyId = :id")
     abstract fun deleteCompanyById(id: String): Int
+
+    @Query("SELECT * FROM ${AppConstants.TABLE_COMPANY} WHERE company = :keywords")
+    abstract fun getCompanyByName(keywords:String): List<CompanyVo>?
 }

@@ -9,8 +9,15 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.nyinyihtunlwin.club.R
 import com.nyinyihtunlwin.club.adapters.MemberAdapter
 import com.nyinyihtunlwin.club.data.viewmodels.MemberViewModel
+import com.nyinyihtunlwin.club.data.vos.MemberVo
+import com.nyinyihtunlwin.club.dialogs.MemberFilterDialog
+import com.nyinyihtunlwin.club.events.MemberFilterEvent
+import com.nyinyihtunlwin.club.utils.AppConstants
+import com.nyinyihtunlwin.club.utils.ConfigUtils
 import kotlinx.android.synthetic.main.activity_members.*
 import kotlinx.android.synthetic.main.content_members.*
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 class MembersActivity : BaseActivity() {
 
@@ -43,6 +50,8 @@ class MembersActivity : BaseActivity() {
         if (intent.getStringExtra(KEY_COMPANY_ID) != null) {
             mCompanyId = intent.getStringExtra(KEY_COMPANY_ID)
         }
+        ConfigUtils.getInstance().saveMemSortBy(AppConstants.MEMBER_ORDERBY_NAME)
+        ConfigUtils.getInstance().saveMemSortOrder(AppConstants.MEMBER_ORDER_DEFAULT)
 
         mViewModel = ViewModelProviders.of(this@MembersActivity)
             .get(MemberViewModel::class.java)
@@ -53,6 +62,18 @@ class MembersActivity : BaseActivity() {
         rvMembers.layoutManager = LinearLayoutManager(applicationContext)
 
         mViewModel.onGetMembers(mCompanyId)
+        mViewModel.mResponseLd.observeForever {
+            mAdapter.setNewData(it as MutableList<MemberVo>)
+        }
+        mViewModel.mErrorLD.observeForever {
+            showPromptDialog(it)
+        }
+
+        ivFilter.setOnClickListener {
+            val fragmentManager = supportFragmentManager
+            val newFragment = MemberFilterDialog()
+            newFragment.show(fragmentManager.beginTransaction(), "")
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -60,6 +81,19 @@ class MembersActivity : BaseActivity() {
             android.R.id.home -> onBackPressed()
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onMemberFilterEvent(event: MemberFilterEvent) {
+        mViewModel.onGetMembers(mCompanyId)
+    }
+
+    override fun onStart() {
+        super.onStart()
+    }
+
+    override fun onStop() {
+        super.onStop()
     }
 
 }

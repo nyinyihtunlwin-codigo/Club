@@ -10,7 +10,7 @@ class CompanyViewModel : BaseViewModel() {
     lateinit var mResponseLd: MutableLiveData<List<CompanyVo>>
 
     init {
-        super.initPresenter()
+        super.initViewModel()
         mResponseLd = MutableLiveData()
     }
 

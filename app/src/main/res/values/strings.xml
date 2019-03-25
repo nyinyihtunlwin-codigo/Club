@@ -25,4 +25,10 @@
     <string name="members">Members</string>
     <string name="goToWeb">Go to website</string>
     <string name="sortBy">Sort By</string>
+    <string name="ok">OK</string>
+
+    <string-array name="member_filter">
+        <item>Name</item>
+        <item>Age</item>
+    </string-array>
 </resources>

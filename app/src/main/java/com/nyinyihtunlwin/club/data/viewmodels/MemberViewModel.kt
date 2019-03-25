@@ -9,12 +9,12 @@ class MemberViewModel : BaseViewModel() {
     lateinit var mResponseLd: MutableLiveData<List<MemberVo>>
 
     init {
-        super.initPresenter()
+        super.initViewModel()
         mResponseLd = MutableLiveData()
     }
 
     fun onGetMembers(companyId:String) {
-        if (!ClubModel.getInstance().getCompanies().isEmpty()) {
+        if (!ClubModel.getInstance().getMembersByCompany(companyId)!!.isEmpty()) {
             mResponseLd.value = ClubModel.getInstance().getMembersByCompany(companyId)
         }else{
             mErrorLD.value = "No data!"

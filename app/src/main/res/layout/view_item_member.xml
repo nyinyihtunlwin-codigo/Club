@@ -20,12 +20,13 @@
         <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_medium"
                 android:orientation="horizontal">
             <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="age"
-                    android:layout_weight="1"
+                    android:layout_weight=".5"
                     android:textColor="@color/secondary_text"/>
             <TextView
                     android:id="@+id/tvAge"
@@ -43,7 +44,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="email"
-                    android:layout_weight="1"
+                    android:layout_weight=".5"
                     android:textColor="@color/secondary_text"/>
             <TextView
                     android:id="@+id/tvEmail"
@@ -61,7 +62,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="phone"
-                    android:layout_weight="1"
+                    android:layout_weight=".5"
                     android:textColor="@color/secondary_text"/>
             <TextView
                     android:id="@+id/tvPhone"

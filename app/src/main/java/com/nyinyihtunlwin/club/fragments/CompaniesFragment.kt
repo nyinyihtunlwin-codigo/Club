@@ -86,7 +86,6 @@ class CompaniesFragment : BaseFragment()
     override fun onTapCompanyWebsite(webUrl: String) {
     }
 
-
     override fun onStart() {
         super.onStart()
     }
