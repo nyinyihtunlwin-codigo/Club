@@ -13,7 +13,7 @@ import com.nyinyihtunlwin.club.adapters.MemberAdapter
 import com.nyinyihtunlwin.club.data.viewmodels.FavoriteMemberViewModel
 import com.nyinyihtunlwin.club.data.vos.MemberVo
 import com.nyinyihtunlwin.club.delegates.MemberDelegate
-import kotlinx.android.synthetic.main.fragment_favorite_members.*
+import kotlinx.android.synthetic.main.fragment_favorite_members.view.*
 
 class FavoriteMembersFragment : BaseFragment(),
 MemberDelegate{
@@ -35,17 +35,22 @@ MemberDelegate{
         mViewModel = ViewModelProviders.of(this@FavoriteMembersFragment)
             .get(FavoriteMemberViewModel::class.java)
 
-        rvMembers.setEmptyView(vpEmpty)
+        view.rvMembers.setEmptyView(view.vpEmpty)
         mAdapter = MemberAdapter(context!!, this)
-        rvMembers.adapter = mAdapter
-        rvMembers.layoutManager = LinearLayoutManager(context)
+        view.rvMembers.adapter = mAdapter
+        view.rvMembers.layoutManager = LinearLayoutManager(context)
 
         mViewModel.onGetFavoriteMembers()
+        view.swipeRefresh.setOnRefreshListener {
+            mViewModel.onGetFavoriteMembers()
+        }
 
         mViewModel.mResponseLd.observe(this, Observer {
+            view.swipeRefresh.isRefreshing = false
             mAdapter.setNewData(it as MutableList<MemberVo>)
         })
         mViewModel.mErrorLD.observe(this, Observer {
+            view.swipeRefresh.isRefreshing = false
             showPromptDialog(it.toString())
         })
     }

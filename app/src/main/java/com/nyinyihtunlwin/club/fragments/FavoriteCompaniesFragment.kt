@@ -1,6 +1,8 @@
 package com.nyinyihtunlwin.club.fragments
 
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,7 +16,7 @@ import com.nyinyihtunlwin.club.adapters.CompanyAdapter
 import com.nyinyihtunlwin.club.data.viewmodels.FavoriteCompanyViewModel
 import com.nyinyihtunlwin.club.data.vos.CompanyVo
 import com.nyinyihtunlwin.club.delegates.CompanyDelegate
-import kotlinx.android.synthetic.main.fragment_companies.*
+import kotlinx.android.synthetic.main.fragment_favorite_companies.view.*
 
 class FavoriteCompaniesFragment : BaseFragment(),
     CompanyDelegate {
@@ -36,10 +38,10 @@ class FavoriteCompaniesFragment : BaseFragment(),
         mViewModel = ViewModelProviders.of(this@FavoriteCompaniesFragment)
             .get(FavoriteCompanyViewModel::class.java)
 
-        rvCompanies.setEmptyView(vpEmpty)
+        view.rvCompanies.setEmptyView(view.vpEmpty)
         mAdapter = CompanyAdapter(context!!, this)
-        rvCompanies.adapter = mAdapter
-        rvCompanies.layoutManager = LinearLayoutManager(context)
+        view.rvCompanies.adapter = mAdapter
+        view.rvCompanies.layoutManager = LinearLayoutManager(context)
 
         mViewModel.onGetFavoriteCompanies()
 
@@ -56,6 +58,11 @@ class FavoriteCompaniesFragment : BaseFragment(),
     }
 
     override fun onTapCompanyWebsite(webUrl: String) {
+        val intent = Intent(Intent.ACTION_VIEW)
+        intent.data = Uri.parse(webUrl)
+        if(activity!=null){
+            activity?.startActivity(intent)
+        }
     }
 
     override fun onTapFavoriteCompany(companyId: String) {

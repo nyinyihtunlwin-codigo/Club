@@ -1,5 +1,6 @@
 package com.nyinyihtunlwin.club.activities
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
@@ -20,6 +21,12 @@ import kotlinx.android.synthetic.main.app_bar_main.*
 
 class MainActivity : BaseActivity(),
     NavigationView.OnNavigationItemSelectedListener {
+
+    companion object {
+        fun newInstance(context: Context): Intent {
+            return Intent(context, MainActivity::class.java)
+        }
+    }
 
     private var mCurrentSection = 0
 
@@ -95,6 +102,7 @@ class MainActivity : BaseActivity(),
             } else {
                 if (mCurrentSection != 0) {
                     mCurrentSection = 0
+                    ivFilter.visibility = View.VISIBLE
                     setFragment(CompaniesFragment(), "Companies")
                 } else {
                     val intent = Intent(Intent.ACTION_MAIN)
@@ -107,4 +115,5 @@ class MainActivity : BaseActivity(),
             }
         }
     }
+
 }

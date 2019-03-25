@@ -26,7 +26,11 @@ class CompanyViewHolder(itemView: View, var delegate: CompanyDelegate) : BaseVie
             checkIsFavorite()
         }
         itemView.btnGoToWeb.setOnClickListener {
-            delegate.onTapCompanyWebsite(mData.website)
+            if(!mData.website.contains("https://")){
+                delegate.onTapCompanyWebsite("https://${mData.website}")
+            }else{
+                delegate.onTapCompanyWebsite(mData.website)
+            }
         }
     }
 

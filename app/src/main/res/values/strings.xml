@@ -26,6 +26,9 @@
     <string name="goToWeb">Go to website</string>
     <string name="sortBy">Sort By</string>
     <string name="ok">OK</string>
+    <string name="version">Version 1.0</string>
+    <string name="developedBy">Developed by</string>
+    <string name="developer">Nyi Nyi Htun Lwin</string>
 
     <string-array name="member_filter">
         <item>Name</item>

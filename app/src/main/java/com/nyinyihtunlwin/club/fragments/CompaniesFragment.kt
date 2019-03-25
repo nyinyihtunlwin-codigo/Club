@@ -1,6 +1,8 @@
 package com.nyinyihtunlwin.club.fragments
 
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -41,7 +43,7 @@ class CompaniesFragment : BaseFragment()
             .get(CompanyViewModel::class.java)
 
         rvCompanies.setEmptyView(vpEmpty)
-        mAdapter = CompanyAdapter(context!!,this)
+        mAdapter = CompanyAdapter(context!!, this)
         rvCompanies.adapter = mAdapter
         rvCompanies.layoutManager = LinearLayoutManager(context)
 
@@ -84,6 +86,11 @@ class CompaniesFragment : BaseFragment()
     }
 
     override fun onTapCompanyWebsite(webUrl: String) {
+        val intent = Intent(Intent.ACTION_VIEW)
+        intent.data = Uri.parse(webUrl)
+        if(activity!=null){
+            activity?.startActivity(intent)
+        }
     }
 
     override fun onTapFavoriteCompany(companyId: String) {

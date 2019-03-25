@@ -2,6 +2,7 @@ package com.nyinyihtunlwin.club.activities
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -154,7 +155,9 @@ class SearchActivity : BaseActivity(),
     }
 
     override fun onTapCompanyWebsite(webUrl: String) {
-
+        val intent = Intent(Intent.ACTION_VIEW)
+        intent.data = Uri.parse(webUrl)
+        startActivity(intent)
     }
 
     override fun onTapFavoriteCompany(companyId: String) {
