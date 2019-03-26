@@ -44,11 +44,16 @@ class FavoriteCompaniesFragment : BaseFragment(),
         view.rvCompanies.layoutManager = LinearLayoutManager(context)
 
         mViewModel.onGetFavoriteCompanies()
+        view.swipeRefresh.setOnRefreshListener {
+            mViewModel.onGetFavoriteCompanies()
+        }
 
         mViewModel.mResponseLd.observe(this, Observer {
+            view.swipeRefresh.isRefreshing = false
             mAdapter.setNewData(it as MutableList<CompanyVo>)
         })
         mViewModel.mErrorLD.observe(this, Observer {
+            view.swipeRefresh.isRefreshing = false
             showPromptDialog(it.toString())
         })
     }
